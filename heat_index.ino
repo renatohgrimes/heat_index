@@ -10,12 +10,12 @@ DHT dht(23, DHT22);
 
 float calculateHeatIndex(float celsius, float humidity) {
     float h = humidity;
-    float f = (celsius * 9 / 5) + 32;
+    float f = (celsius * 9 / 5) + 32; // to farenheit
     float heatIndex = -42.379f + (2.04901523f * f) + (10.14333127f * h)
                       - (0.22475541f * f * h) - (6.83783e-3f * powf(f, 2))
                       - (5.481717e-2f * powf(h, 2)) + (1.22874e-3f * powf(f, 2) * h)
                       + (8.5282e-4f * f * powf(h, 2)) - (1.99e-6f * powf(f, 2) * powf(h, 2));
-    heatIndex = (heatIndex - 32) * 5 / 9;
+    heatIndex = (heatIndex - 32) * 5 / 9; // to celsius
     return heatIndex;
 }
 
@@ -77,5 +77,5 @@ void loop() {
   lcd.print("Risk: ");
   lcd.print(noaaHeatEffect(feels));
 
-  delay(30 * 1000);
+  delay(15 * 1000);
 }
