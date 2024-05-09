@@ -38,6 +38,22 @@ String noaaHeatEffect(float heatIndex)
   }
 }
 
+int roundFloat(float f) {
+  int i = (int)f;
+  float fraction;
+  if (f < 0) {
+    fraction = f + i;
+    fraction = fraction * -1;
+  } else {
+    fraction = f - i;
+  }
+  if (fraction >= 0.5) {
+    return (int)ceil(f);
+  } else {
+    return (int)floor(f);
+  }
+}
+
 void setup() {  
   lcd.begin(16, 2);
   lcd.print("starting...");
@@ -63,19 +79,19 @@ void loop() {
     return;
   }
 
-  int feels = (int)ceil(calculateHeatIndex(celsius, humidity));
+  float heat = calculateHeatIndex(celsius, humidity);
 
   lcd.print("Feels: ");
-  lcd.print(feels);
+  lcd.print(roundFloat(heat));
   lcd.print((char)223); // °
   lcd.print("C");
   lcd.print(" ");
-  lcd.print((int)ceil(humidity));
+  lcd.print(roundFloat(humidity));
   lcd.print((char)37); // %
   
   lcd.setCursor(0, 1);
   lcd.print("Risk: ");
-  lcd.print(noaaHeatEffect(feels));
+  lcd.print(noaaHeatEffect(heat));
 
   delay(15 * 1000);
 }
