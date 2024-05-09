@@ -22,16 +22,16 @@ float calculateHeatIndex(float celsius, float humidity) {
 String noaaHeatEffect(float heatIndex)
 {
   if (heatIndex >= 27 && heatIndex < 33) {
-    return "FATIGUE";
+    return "MILD";
   }
   else if (heatIndex >= 33 && heatIndex < 40) {
-    return "EXHAUSTION";
+    return "DISTRESS";
   }
   else if (heatIndex >= 40 && heatIndex < 52) {
-    return "PAIN";
+    return "DANGER";
   }
   else if (heatIndex >= 52) {
-    return "DEATH";
+    return "UNBEARABLE";
   }
   else {
     return "-";
@@ -66,7 +66,7 @@ void loop() {
   lcd.clear();  
 
   digitalWrite(DHT_POWER, HIGH);
-  delay(3 * 1000);
+  delay(2500);
 
   float celsius = dht.readTemperature();
   float humidity = dht.readHumidity();
@@ -75,7 +75,7 @@ void loop() {
 
   if (isnan(celsius) || isnan(humidity)) {
     lcd.print("READ FAIL");
-    delay(5 * 1000);
+    delay(5000);
     return;
   }
 
@@ -93,5 +93,5 @@ void loop() {
   lcd.print("Risk: ");
   lcd.print(noaaHeatEffect(heat));
 
-  delay(15 * 1000);
+  delay(15000);
 }
